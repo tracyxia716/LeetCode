@@ -1,7 +1,6 @@
 package linkedlist;
 
 
-
 public class MyLinkedList {
     class Node<T> {
         T node;
@@ -12,16 +11,20 @@ public class MyLinkedList {
     public static void main(String[] args) {
         MyLinkedList list = new MyLinkedList();
 
-        list.addAtTail(1000);
-        list.addAtTail(1000);
-        list.addAtTail(1000);
 
-        list.addAtTail(1000);
+        list.addAtHead(1);
+//        list.addAtTail(3);
+        list.addAtIndex(1,2);
+        System.out.println(list.get(1));
+        System.out.println(list.get(0));
+        System.out.println(list.get(2));
 
-        list.addAtTail(1000);
+
+//        list.deleteAtIndex(1);
+//        System.out.println(list.get(1));
 
 
-        System.out.println(list.get(104));
+//        System.out.println(list.get(104));
     }
 
 
@@ -40,14 +43,6 @@ public class MyLinkedList {
         tail = new Node<>();
 
         current = head;
-        for (int i = 0; i < 100; i++) {
-            Node<Integer> node = new Node<>();
-            current.next = node;
-            node.pre = current;
-            node.node = i + 1;
-            current = node;
-            length++;
-        }
 
         current.next = tail;
         tail.pre = current;
@@ -57,12 +52,12 @@ public class MyLinkedList {
      * Get the value of the index-th node in the linked list. If the index is invalid, return -1.
      */
     public int get(int index) {
-        if (index > length || index < 1) {
+        if (index >= length || index < 0) {
             return -1;
         }
         current = head;
         current = current.next;
-        for (int i = 0; i < index - 1; i++) {
+        for (int i = 0; i < index; i++) {
             current = current.next;
         }
 
@@ -107,12 +102,12 @@ public class MyLinkedList {
      * Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
      */
     public void addAtIndex(int index, int val) {
-        if (index > length || index < 1) {
+        if (index > length || index < 0) {
             return;
         }
         current = head;
         current = current.next;
-        for (int i = 0; i < index - 1; i++) {
+        for (int i = 0; i < index; i++) {
             current = current.next;
         }
         Node<Integer> node = new Node<>();
@@ -130,12 +125,12 @@ public class MyLinkedList {
      * Delete the index-th node in the linked list, if the index is valid.
      */
     public void deleteAtIndex(int index) {
-        if (index > length || index < 1) {
+        if (index >= length || index < 0) {
             return;
         }
         current = head;
         current = current.next;
-        for (int i = 0; i < index - 1; i++) {
+        for (int i = 0; i < index; i++) {
             current = current.next;
         }
 
