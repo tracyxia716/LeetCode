@@ -1,30 +1,27 @@
 package linkedlist;
 
-class Node<T> {
-    T node;
-    Node<T> next;
-    Node<T> pre;
-}
+
 
 public class MyLinkedList {
+    class Node<T> {
+        T node;
+        Node<T> next;
+        Node<T> pre;
+    }
 
     public static void main(String[] args) {
         MyLinkedList list = new MyLinkedList();
 
-//        list.addAtIndex(100, 30);
-//        System.out.println(list.get(2));
+        list.addAtTail(1000);
+        list.addAtTail(1000);
+        list.addAtTail(1000);
 
-        list.deleteAtIndex(5);
+        list.addAtTail(1000);
 
-//        System.out.println(list.get(3));
-        System.out.println(list.get(4));
+        list.addAtTail(1000);
 
-        System.out.println(list.get(5));
-//        System.out.println(list.get(101));
 
-//        System.out.println(list.get(99));
-
-//        System.out.println(list.get(2));
+        System.out.println(list.get(104));
     }
 
 
@@ -39,14 +36,12 @@ public class MyLinkedList {
      */
     public MyLinkedList() {
         head = new Node<>();
-
         current = new Node<>();
-
         tail = new Node<>();
 
         current = head;
         for (int i = 0; i < 100; i++) {
-            Node<Integer> node = new Node();
+            Node<Integer> node = new Node<>();
             current.next = node;
             node.pre = current;
             node.node = i + 1;
@@ -62,7 +57,7 @@ public class MyLinkedList {
      * Get the value of the index-th node in the linked list. If the index is invalid, return -1.
      */
     public int get(int index) {
-        if (index > length) {
+        if (index > length || index < 1) {
             return -1;
         }
         current = head;
@@ -84,6 +79,9 @@ public class MyLinkedList {
 
         node.next = current.next;
         current.next = node;
+
+        node.pre = current;
+        node.next.pre = node;
         length++;
     }
 
@@ -93,15 +91,15 @@ public class MyLinkedList {
     public void addAtTail(int val) {
         current = tail;
         Node<Integer> node = new Node<>();
+
         node.node = val;
-        //指向尾节点的前一个
-        node.pre = current.pre;
-        //尾节点的前一个节点的next节点指向新节点
-        node.pre.next = node;
-        //尾节点的pre节点指向新节点
-        current.pre = node;
-        //新节点的next节点指向尾节点
+
         node.next = current;
+        node.pre = current.pre;
+
+        node.pre.next = node;
+        node.next.pre = node;
+
         length++;
     }
 
@@ -109,10 +107,11 @@ public class MyLinkedList {
      * Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
      */
     public void addAtIndex(int index, int val) {
-        if (index > length) {
+        if (index > length || index < 1) {
             return;
         }
         current = head;
+        current = current.next;
         for (int i = 0; i < index - 1; i++) {
             current = current.next;
         }
@@ -123,13 +122,15 @@ public class MyLinkedList {
         current.pre.next = node;
 
         node.next = current;
+        current.pre = node;
+        length++;
     }
 
     /**
      * Delete the index-th node in the linked list, if the index is valid.
      */
     public void deleteAtIndex(int index) {
-        if (index > length) {
+        if (index > length || index < 1) {
             return;
         }
         current = head;
@@ -143,8 +144,7 @@ public class MyLinkedList {
 
         current.next = null;
         current.pre = null;
-
-//        System.out.println(current);
+        length--;
     }
 }
 
